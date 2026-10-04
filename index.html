@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Cartoon World Kids 🧸</title>
+<title>Cartoon World Kids - VIP 🧸</title>
 <style>
 :root {
   --bg-color: #fff7fb;
@@ -29,6 +29,21 @@
 
 *{box-sizing:border-box}
 body{margin:0;font-family:Tahoma,Arial,sans-serif;background:var(--bg-color);color:var(--text-color);transition:background 0.3s, color 0.3s}
+
+#auth-overlay {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    background: rgba(15, 10, 14, 0.96) !important;
+    z-index: 999999 !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    direction: rtl;
+}
+
 header{background:var(--header-bg);padding:24px 16px 30px;text-align:center;border-radius:0 0 28px 28px;box-shadow:0 4px 18px var(--header-shadow);position:relative}
 .logo{font-size:34px;font-weight:900;color:white;text-shadow:0 2px 5px #c85a94}
 .tag{color:#fff;font-size:16px;margin:7px 0 18px}
@@ -51,27 +66,53 @@ h2{margin:18px 0 12px;color:var(--text-color)}
 .fav{position:absolute;top:9px;left:9px;border:0;background:var(--card-bg);width:34px;height:34px;border-radius:50%;font-size:19px;cursor:pointer;box-shadow:0 2px 8px var(--card-shadow);z-index:2}
 .loading{text-align:center;padding:20px;color:#d34e91;font-weight:bold;font-size:16px}
 
-/* نافذة التفاصيل الفخمة (Modal) */
 .modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);display:none;justify-content:center;align-items:center;z-index:100;padding:15px}
 .modal-content{background:var(--modal-bg);width:100%;max-width:650px;border-radius:24px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,0.3);animation:fadeIn 0.3s ease}
 .modal-header{background:var(--header-bg);padding:15px 20px;display:flex;justify-content:space-between;align-items:center;color:white}
 .close-btn{background:none;border:0;font-size:24px;color:white;cursor:pointer}
 .modal-body{padding:20px;max-height:75vh;overflow-y:auto}
-.modal-poster{width:100%;height:250px;background-size:cover;background-position:center;border-radius:16px;margin-bottom:15px}
-.stats-box{display:flex;gap:15px;background:var(--bg-color);padding:10px 15px;border-radius:12px;margin-bottom:15px;font-size:14px;color:var(--text-color);font-weight:bold;justify-content:space-around}
+.stats-box{display:flex;gap:15px;background:var::bg-color;padding:10px 15px;border-radius:12px;margin-bottom:15px;font-size:14px;color:var(--text-color);font-weight:bold;justify-content:space-around}
 .servers{display:flex;gap:10px;flex-wrap:wrap;margin-top:15px}
 .server-btn{background:#ff86c2;color:white;border:0;padding:10px 18px;border-radius:14px;font-weight:bold;cursor:pointer;text-decoration:none;display:inline-block}
-.server-btn:hover{background:#e06ca6}
-
-/* شاشة المشاهدة داخل الموقع */
-#player-container{display:none;margin-bottom:15px;width:100%;height:320px;border-radius:16px;overflow:hidden;background:#000}
-#player-container iframe{width:100%;height:100%;border:0}
 
 @keyframes fadeIn{from{opacity:0;transform:scale(0.95)}to{opacity:1;transform:scale(1)}}
 footer{text-align:center;padding:30px;color:var(--subtext)}
 </style>
 </head>
 <body data-theme="light">
+
+<div id="auth-overlay">
+    <div style="background:#2b1c25; padding:35px; border-radius:24px; width:90%; max-width:420px; text-align:center; box-shadow:0 10px 30px rgba(255,139,199,0.4); border:2px solid #ff8fc7; position:relative; overflow:hidden;">
+        
+        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; pointer-events: none; z-index: 0; opacity: 0.08; transform: rotate(-15deg);">
+            <span style="font-size: 32px; font-weight: bold; color: #ff8fc7; text-align: center; line-height: 1.4;">عمر أسامة<br>فريدة أسامة</span>
+        </div>
+
+        <div style="position: relative; z-index: 1;">
+            <h2 style="color:#ff8fc7; margin-bottom:10px;">🧸 Cartoon World Kids</h2>
+            
+            <div id="code-section">
+                <p style="color:#d0a3bc; font-size:14px; margin-bottom:10px;">الموقع محمي ومخصص للمشتركين فقط. أدخلي كلمة السر الخاصة بكِ! ✨</p>
+                
+                <!-- الملحوظة الجديدة هنا -->
+                <p style="color: #ffaa00; font-size: 13px; font-weight: bold; margin: 0 0 15px 0; text-align: center;">❗❗ مجرد ما تعملي ريفرش أو تطلعي من الموقع الكود بيتقفل</p>
+
+                <input type="text" id="activation-code" placeholder="أدخلي كلمة السر (الكود) 🔑" style="width:100%; padding:14px; border-radius:14px; border:2px solid #ff8fc7; background:#1a1218; color:white; font-size:15px; text-align:center; outline:none; margin-bottom:12px;">
+                <button onclick="checkCode()" style="width:100%; padding:14px; background:#ff8fc7; color:#1a1218; font-weight:bold; border:0; border-radius:14px; font-size:16px; cursor:pointer; box-shadow:0 4px 15px rgba(255,139,199,0.4);">دخول للموقع 🚀</button>
+                <p style="color:#d0a3bc; font-size:13px; margin-top:18px; cursor:pointer; text-decoration:underline;" onclick="toggleRequestForm()">ليس لديكِ كود؟ اضغطي هنا لطلب الاشتراك 📩</p>
+            </div>
+
+            <div id="request-section" style="display:none;">
+                <input type="text" id="user-name" placeholder="اسمك الكريم 🌸" style="width:100%; padding:12px; border-radius:12px; border:2px solid #ff8fc7; background:#1a1218; color:white; font-size:14px; text-align:center; outline:none; margin-bottom:10px;">
+                <input type="email" id="user-email" placeholder="بريدك الإلكتروني 📧" style="width:100%; padding:12px; border-radius:12px; border:2px solid #ff8fc7; background:#1a1218; color:white; font-size:14px; text-align:center; outline:none; margin-bottom:12px;">
+                <button onclick="sendActivationRequest()" style="width:100%; padding:12px; background:#27ae60; color:white; font-weight:bold; border:0; border-radius:12px; font-size:15px; cursor:pointer;">إرسال طلب الاشتراك للإدارة 💳</button>
+                <p style="color:#d0a3bc; font-size:13px; margin-top:18px; cursor:pointer; text-decoration:underline;" onclick="toggleRequestForm()">العودة لخانة الكود 🔙</p>
+            </div>
+        </div>
+
+    </div>
+</div>
+
 <header>
   <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">🌙</button>
   <div class="logo">🧸 Cartoon World Kids</div>
@@ -95,7 +136,6 @@ footer{text-align:center;padding:30px;color:var(--subtext)}
   <div id="loading" class="loading" style="display:none;">جاري جلب المزيد من الكرتونات السحرية... ✨</div>
 </main>
 
-<!-- نافذة التفاصيل والمشاهدة -->
 <div id="modal" class="modal">
   <div class="modal-content">
     <div class="modal-header">
@@ -103,25 +143,18 @@ footer{text-align:center;padding:30px;color:var(--subtext)}
       <button class="close-btn" onclick="closeModal()">×</button>
     </div>
     <div class="modal-body">
-      <!-- مشغل السيرفر المباشر -->
-      <div id="player-container">
-        <iframe id="video-player" src="" allowfullscreen></iframe>
-      </div>
-      
-      <div id="m-poster" class="modal-poster"></div>
+      <div id="m-poster" style="width:100%; height:250px; background-size:cover; background-position:center; border-radius:16px; margin-bottom:15px;"></div>
       
       <div class="stats-box">
         <span id="m-rating">⭐ التقييم: --</span>
         <span id="m-views">👁️ المشاهدات: --</span>
         <span id="m-date">📅 الإصدار: --</span>
       </div>
-      <p id="m-desc" style="color:var(--text-color); line-height:1.6; margin-bottom:20px; opacity:0.85;"></p>
+      <p id="m-desc" style="color:var::text-color; line-height:1.6; margin-bottom:20px; opacity:0.85;"></p>
       
-      <h4 style="color:var(--text-color); margin-bottom:10px;">سيرفرات المشاهدة الحقيقية 🌍:</h4>
+      <h4 style="color:var(--text-color); margin-bottom:10px;">الانتقال لسينما العرض المباشر 🌍:</h4>
       <div class="servers">
-        <button class="server-btn" onclick="playServer(1)">سيرفر العرض السريع (VIP)</button>
-        <button class="server-btn" onclick="playServer(2)">سيرفر الجودة العالية (HD)</button>
-        <a id="download-btn" href="#" target="_blank" class="server-btn" style="background:#b37198;">سيرفر التحميل المباشر</a>
+        <button class="server-btn" onclick="openPlayer()">🎬 اضغطي هنا لمشاهدة الكرتون (سيرفرات المشغل)</button>
       </div>
     </div>
   </div>
@@ -130,6 +163,131 @@ footer{text-align:center;padding:30px;color:var(--subtext)}
 <footer>💕 Cartoon World Kids — متعة وامان للأطفال!</footer>
 
 <script>
+const masterCodes = [
+    "X8k9-M2p4", "L3v7-q9w1", "B5n2-x4z8", "J6h1-c7v3", "R9t4-m5n6",
+    "K2q8-p1l7", "W4s3-x8k2", "Z7m5-j6h9", "Q1v9-b3n4", "H8x2-t7r1",
+    "M6p4-l2w5", "C3k7-q8z9", "F9h2-v1s6", "D5t8-m4x3", "N7w1-p9k5",
+    "Y2j6-c8h2", "V4q3-b7t9", "G8s1-x2m6", "P1v5-l4z7", "T9n3-k6w8",
+    "A4h7-q2p1", "E6x8-j5r3", "U3m9-v8s4", "I7t2-b1n6", "O5k4-w9z2",
+    "S8p6-h3q7", "F2v1-m7x4", "D1k9-c2t5", "L9h8-p6w3", "R3z7-j4v1",
+    "K5m2-q8s9", "W7t6-x1n4", "Z2p3-b9h5", "Q6v8-l7k2", "H4s9-t3r6",
+    "M1x5-w2p7", "C8k3-q9v4", "F7h6-v5s1", "D2t9-m8x2", "N4w3-p1k6",
+    "Y5j8-c7h9", "V1q2-b4t3", "G9s6-x8m5", "P3v7-l2z1", "T4n1-k9w6",
+    "A8h2-q6p4", "E1x9-j3r5", "U7m3-v2s8", "I4t6-b5n1", "O9k2-w7z4",
+    "S3p8-h1q2", "F6v4-m9x7", "D8k5-c3t1", "L2h9-p4w6", "R7z1-j8v3",
+    "K1m6-q2s5", "W9t8-x4n7", "Z6p2-b1h9", "Q3v4-l8k7", "H7s5-t9r2",
+    "M2x1-w6p3", "C5k8-q1v9", "F4h9-v7s2", "D6t3-m5x8", "N1w7-p2k4",
+    "Y8j3-c9h1", "V6q5-b3t8", "G2s4-x7m9", "P9v1-l6z5", "T7n8-k4w2",
+    "A1h6-q8p3", "E9x2-j7r4", "U5m4-v1s9", "I3t7-b6n2", "O8k1-w3z5",
+    "S2p9-h4q6", "F7v6-m1x3", "D4k8-c9t2", "L5h1-p7w4", "R9z3-j2v6",
+    "K8m7-q5s1", "W3t2-x9n6", "Z1p4-b8h5", "Q5v7-l3k9", "H2s6-t1r8",
+    "M9x4-w7p2", "C1k6-q3v8", "F8h5-v2s9", "D3t1-m7x6", "N6w9-p4k2",
+    "Y1j7-c5h8", "V8q3-b9t1", "G4s2-x6m7", "P7v5-l1z8", "T2n6-k3w9",
+    "A6h4-q7p2", "E3x1-j9r6", "U9m8-v4s5", "I2t5-b8n7", "O7k6-w1z3",
+    "Z9x2-k8m1", "B4v7-p3l5", "C6n1-h9j2", "D8t4-q2w6", "F1s5-z7x3",
+    "G3k9-m6p8", "H5w2-l1v4", "J7r8-n5b9", "K2q6-x3t1", "L9p1-c4h7",
+    "M4v5-s8z2", "N6k3-w7j9", "P8t2-q1m5", "Q1s9-h6p4", "R3x6-v2l8",
+    "S5m7-b4k1", "T7w4-z9j3", "U9p8-x1t6", "V2k1-m5h2", "W6q3-l9v7",
+    "X8n5-p2b4", "Y1s2-c6m8", "Z3t9-h1k3", "A5r6-q7w1", "E7p4-v3x5",
+    "I2k9-m1z8", "O4w6-l5j2", "S6v1-b8t9", "F3m8-p9h4", "G1q5-x2k6",
+    "H9t2-c4s7", "J4p7-m3v1", "K6s3-w8z5", "L2x9-h7n4", "M8k4-q1l2",
+    "N1v6-p5b3", "P3t8-z2m9", "Q7w2-x6h8", "R5m1-k4v7", "S9p3-l1j6",
+    "T1q8-b7s4", "U4x2-m9k3", "V8n6-p2w1", "W2s5-c3t8", "X6k7-h5v2",
+    "Y3p9-q1m4", "Z5v2-z8s6", "A2t4-w7k1", "E9m6-p3l9", "I1q3-b5h2",
+    "O6x8-m2v4", "S4k5-q9z7", "F8p2-l4t1", "D2n1-h6x3", "L7s9-v8m5",
+    "R4w3-p1k2", "K9t6-c7j4", "W1m8-q4v9", "Z3x5-b2s1", "Q8p1-m6h7",
+    "H6v4-w3k2", "M5k2-p9t8", "C2q9-l1z6", "F9s3-x5n4", "N4t7-h8m1",
+    "V7p1-b4v2", "T3w8-q6k9", "P1m5-z1s3", "K8x2-l7p4", "G5n6-m2h8",
+    "A3v9-q8t1", "E2k4-x3w5", "U6s1-p7m2", "I9p7-b1j9", "O1t3-v6z4",
+    "S7m8-h2k6", "F4w2-q5l3", "D9k1-m8v7", "L1q6-p4s2", "R8n3-x1t5",
+    "K4p9-c9h6", "W3v2-m3z1", "Z7s8-l5w4", "Q2k6-p8b2", "H1m5-q1t9",
+    "M7x3-v4k8", "C4p2-h7s6", "F6t1-m2n5", "N9q8-w6z3", "Y4v5-p1l7",
+    "V3k9-b8m2", "G8s4-x2t4", "P2m1-q9h5", "T6p7-l3k1", "A9x2-v5s8",
+    "E5t4-m1z6", "U1k8-p4w9", "I8q6-h3j2", "O3v3-b7m4", "S1p2-x8t1",
+    "F7k5-q2l9", "D6m8-v1s3", "L4w1-p9h7", "R2t9-m5k6", "K9s2-z4v8",
+    "W5p6-c1n1", "Z1x3-q7w4", "Q4v8-h8m2", "H3k1-p3l6", "M2q5-v9s7",
+    "C8t6-m4k3", "F1p9-w2z5", "N3s4-l6h1", "V5m2-q1v8", "T8k7-p5t2",
+    "A7v1-b3m9", "E4q6-x7s4", "U2p3-h1k8", "I6m5-v8z2", "O9t1-p2w6",
+    "S3s9-l4j5", "F2k8-m7n3", "D8p4-q6t1", "L5v6-x1h9", "R1m2-p3s5",
+    "K7q3-b8k2", "W4t5-z2m7", "Z9p8-v4w1", "Q3k2-h6s4", "H5m1-q9l8",
+    "M6v7-p1z3", "C1s4-m8t2", "F8x9-l2k5", "N2p6-v7h1", "V1q4-b5m9",
+    "T5t2-x3w6", "P7k1-q1s8", "K3m8-p6z4", "G9v3-h4l2", "A2p5-m2t7",
+    "E8s6-q8k1", "U4t1-v1n4", "I5k9-p4s3", "O2m4-z5h7", "S8p2-l7w8",
+    "F3v7-m3k5", "D1q1-q4v2", "L6k4-h2s9", "R7p8-p1m1", "K2t3-x6z6",
+    "W9m5-b1t4", "Z4s1-q9h3", "Q1p6-l3v5", "H8v2-m5k7", "M3k9-p8s2",
+    "C7p4-v2w1", "F5t6-h7z8", "N1q8-m1l4", "V6s3-q3t9", "T2m2-p2k6",
+    "A8p1-b6v8", "E1k5-x4m3", "U7s4-p9z1", "I3v9-h5l7", "O6p2-q2t4",
+    "S5t1-m6s6", "F4k8-p1v3", "D9m3-l8k9", "L2q5-v4h2", "R3k6-q7s1",
+    "K1p1-m3w5", "W8v4-z1p8", "Z5t2-h3m4", "Q6s8-l5k2", "H2p9-p7v7",
+    "M4m1-q1s9", "C9k3-v9t3", "F7v2-x2h6", "N5p5-m4l1", "V2t7-b8k8",
+    "T1q3-p6z2", "P8m6-q5w4", "K6v1-h1s7", "G3s4-m7v5", "A4k2-p3t1"
+];
+
+function getUsedCodes() {
+    let used = localStorage.getItem("usedGlobalCodes");
+    return used ? JSON.parse(used) : [];
+}
+
+window.addEventListener("DOMContentLoaded", () => {
+    const authOverlay = document.getElementById("auth-overlay");
+    if (localStorage.getItem("deviceAuthorized") === "true") {
+        authOverlay.style.display = "none";
+    } else {
+        authOverlay.style.display = "flex";
+    }
+});
+
+function checkCode() {
+    let inputCode = document.getElementById("activation-code").value.trim();
+    if(!inputCode) {
+        alert("من فضلك أدخلي كلمة السر (كود التفعيل)! ⚠️");
+        return;
+    }
+    let usedCodes = getUsedCodes();
+    if (usedCodes.includes(inputCode)) {
+        alert("عذراً، كلمة السر هذه تم استخدامها مسبقاً على جهاز آخر وتم إبطالها نهائياً! ⚠️");
+        return;
+    }
+    if (masterCodes.includes(inputCode)) {
+        usedCodes.push(inputCode);
+        localStorage.setItem("usedGlobalCodes", JSON.stringify(usedCodes));
+        localStorage.setItem("deviceAuthorized", "true");
+        const authOverlay = document.getElementById("auth-overlay");
+        authOverlay.style.cssText = "display: none !important;";
+        alert("أهلاً بكِ في عالم الكرتون يا كرانشي! تم تفعيل الجهاز بنجاح مدى الحياة 💖");
+    } else {
+        alert("عذراً، كلمة السر غير صحيحة! تأكدي من الحروف والأرقام جيداً ⚠️");
+    }
+}
+
+function toggleRequestForm() {
+    const codeSec = document.getElementById("code-section");
+    const reqSec = document.getElementById("request-section");
+    if (codeSec.style.display === "none") {
+        codeSec.style.display = "block";
+        reqSec.style.display = "none";
+    } else {
+        codeSec.style.display = "none";
+        reqSec.style.display = "block";
+    }
+}
+
+function sendActivationRequest() {
+    const name = document.getElementById("user-name").value.trim();
+    const email = document.getElementById("user-email").value.trim();
+    if(!name || !email) {
+        alert("من فضلك ادخلي الاسم والايميل بشكل صحيح! ⚠️");
+        return;
+    }
+    const subject = encodeURIComponent("طلب اشتراك جديد في موقع كرتون الأطفال 🧸");
+    const body = encodeURIComponent(`مرحباً يا كرانشي,\n\nهناك طلب اشتراك جديد للموقع:\n- اسم المشترك: ${name}\n- البريد الإلكتروني: ${email}\n\nيرجى تحصيل قيمة الاشتراك وإرسال كلمة سر عشوائية جديدة من القائمة.`);
+    try {
+        window.open(`mailto:amr955276@gmail.com?subject=${subject}&body=${body}`, '_blank');
+    } catch(e) {}
+    alert(`تم إرسال طلب الاشتراك بنجاح إلى إيميلك (amr955276@gmail.com)! 💎`);
+    toggleRequestForm();
+}
+
 const apiKey = "f487ddad5bddeefbde5682e2828fcb97";
 let currentPage = 1;
 let currentGenre = "10751";
@@ -162,27 +320,20 @@ async function fetchCartoons(append = false) {
   if (isLoading || isSearchMode) return;
   isLoading = true;
   document.getElementById("loading").style.display = "block";
-
   let url = `https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&with_genres=${currentGenre}&language=ar-AR&page=${currentPage}`;
-
   try {
     let res = await fetch(url);
     let data = await res.json();
     let newItems = data.results || [];
     newItems = shuffleArray(newItems);
-
     if (append) {
       allCartoons = allCartoons.concat(newItems);
     } else {
       allCartoons = newItems;
     }
-    
     render(allCartoons);
     currentPage++;
-  } catch (e) {
-    console.error("خطأ في جلب البيانات");
-  }
-  
+  } catch (e) {}
   isLoading = false;
   document.getElementById("loading").style.display = "none";
 }
@@ -202,7 +353,6 @@ function render(list) {
     let posterImg = x.poster_path ? `https://image.tmdb.org/t/p/w500${x.poster_path}` : 'https://via.placeholder.com/500x750?text=Cartoon';
     let title = x.title || x.name || 'كرتون أطفال';
     let views = (x.id * 347) % 85000 + 1200;
-    
     return `
     <div class="card" onclick="openModal('${x.id}')">
       <button class="fav" onclick="event.stopPropagation(); fav(this)" title="مفضلة">♡</button>
@@ -220,7 +370,6 @@ async function searchCartoon() {
     fetchCartoons(false);
     return;
   }
-  
   isSearchMode = true;
   let url = `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${encodeURIComponent(q)}&language=ar-AR`;
   let res = await fetch(url);
@@ -232,49 +381,24 @@ async function searchCartoon() {
 function openModal(id) {
   let item = allCartoons.find(x => x.id == id);
   if(!item) return;
-  
   currentMovieId = id;
   let views = (item.id * 347) % 85000 + 1200;
-  
-  // إخفاء المشغل وإظهار البوستر عند فتح النافذة لأول مرة
-  document.getElementById("player-container").style.display = "none";
-  document.getElementById("m-poster").style.display = "block";
-  
   document.getElementById("m-title").textContent = item.title || item.name;
   document.getElementById("m-poster").style.backgroundImage = `url('https://image.tmdb.org/t/p/w500${item.poster_path}')`;
   document.getElementById("m-rating").textContent = `⭐ التقييم: ${item.vote_average ? item.vote_average.toFixed(1) : '8.5'}/10`;
   document.getElementById("m-views").textContent = `👁️ المشاهدات: ${views.toLocaleString()}`;
   document.getElementById("m-date").textContent = `📅 الإصدار: ${item.release_date || '2025'}`;
   document.getElementById("m-desc").textContent = item.overview || 'قصة كرتونية ممتعة ومليئة بالمغامرات البريقية والمفيدة للأطفال الصغار!';
-  
-  // رابط سيرفر التحميل الخارجي بناءً على الـ ID
-  document.getElementById("download-btn").href = `https://vidsrc.xyz/embed/movie?tmdb=${id}`;
-  
   document.getElementById("modal").style.display = "flex";
 }
 
-// تشغيل السيرفر المباشر داخل المشغل
-function playServer(serverNum) {
-  const playerContainer = document.getElementById("player-container");
-  const modalPoster = document.getElementById("m-poster");
-  const videoPlayer = document.getElementById("video-player");
-  
-  let embedUrl = "";
-  if (serverNum === 1) {
-    // 🧸 حطي هنا رابط السيرفر الأول الجديد بتاعي
-    embedUrl = `https://vidsrc.me/embed/movie?tmdb=${currentMovieId}`; 
-  } else {
-    // 🧸 وحطي هنا رابط السيرفر الثاني الاحتياطي
-    embedUrl = `https://autoembed.cc/embed/movie/${currentMovieId}`;
-  }
-    
-  videoPlayer.src = embedUrl;
-  modalPoster.style.display = "none";
-  playerContainer.style.display = "block";
+function openPlayer() {
+  if (!currentMovieId) return;
+  window.open(`player.html?id=${currentMovieId}&type=movie`, '_blank');
 }
+
 function closeModal() {
   document.getElementById("modal").style.display = "none";
-  document.getElementById("video-player").src = ""; // إيقاف الفيديو عند الإغلاق
 }
 
 window.onclick = function(event) {
@@ -297,9 +421,6 @@ window.addEventListener('scroll', () => {
 });
 
 fetchCartoons(false);
-
-  
 </script>
-  <script src="servers.js"></script>
 </body>
 </html>
